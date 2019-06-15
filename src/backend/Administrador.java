@@ -23,9 +23,9 @@ public class Administrador {
 	 */
 	private Connection conexion;
 
-	/*
+	/**
 	 * Constructor del administrador.
-	 * @params config Archivo con las propiedades de JDBC
+	 * @param config Archivo con las propiedades de JDBC
 	 */
 	public Administrador(Properties config) 
 	{
@@ -34,13 +34,15 @@ public class Administrador {
 		System.setProperty( "derby.system.home", data.getAbsolutePath( ) );
 	}
 	
-	/*
+	/**
 	 * Metodo para la conexion a la BD.
+	 * @throws SQLException si encuentra un error de SQL.
+	 * @throws Exception si hay un error con el driver.
 	 */
 	public void conectarABD() throws SQLException, Exception
 	{
 		String driver = config.getProperty( "admin.db.driver" );
-		Class.forName( driver ).newInstance( );
+		Class.forName( driver ).newInstance();
 
 		String url = config.getProperty( "admin.db.url" );
 		conexion = DriverManager.getConnection( url );
@@ -48,8 +50,9 @@ public class Administrador {
 
 	}
 
-	/*
+	/**
 	 * Metodo para la desconexion de la BD.
+	 * @throws SQLException si encuentra un error de SQL.
 	 */
 	public void desconectarBD( ) throws SQLException
 	{ 
@@ -66,7 +69,7 @@ public class Administrador {
 		verificarInvariante();
 	}
 
-	/*
+	/**
 	 * Metodo de aserción de invariante.
 	 */
 	private void verificarInvariante() 

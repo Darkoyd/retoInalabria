@@ -31,6 +31,8 @@ public class Biblioteca
 	/**
 	 * Método constructor de la biblioteca.
 	 * @param archivoPropiedades Archivo con las propiedades de JDBC.
+	 * @throws SQLException si encuentra un error de SQL.
+	 * @throws Exception si falla al cargar las configuraciones.
 	 */
 	public Biblioteca(String archivoPropiedades) throws SQLException, Exception
 	{
@@ -51,8 +53,9 @@ public class Biblioteca
 		fis.close( );
 	}
 	
-	/*
-	 * Método que retorna el administrador de comunicacion con la BD.
+	/**
+	 * Método que retorna el administrador de conexión con la BD.
+	 * @return El administrados de comunicación.
 	 */
 	public Administrador darAdmin()
 	{

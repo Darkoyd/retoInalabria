@@ -31,8 +31,10 @@ public class InterfazBiblioteca extends JFrame
 	//----------------------------------------------------------------------------------
 	//Métodos
 	//----------------------------------------------------------------------------------
-	/*
+	
+	/**
 	 * Método constructor de la interfáz
+	 * @param biblo Back End de la aplicación.
 	 */
 	public InterfazBiblioteca(Biblioteca biblo)
 	{
@@ -42,6 +44,7 @@ public class InterfazBiblioteca extends JFrame
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(1000, 1000);
 	}
+	
 	/**
 	 * Método principal de la aplicación
 	 * @param args
@@ -63,7 +66,7 @@ public class InterfazBiblioteca extends JFrame
 	}
 	
 	/**
-     * Cierra la ventana y la aplicación
+     * Cierra la ventana y la aplicación.
      */
     public void dispose( )
     {
