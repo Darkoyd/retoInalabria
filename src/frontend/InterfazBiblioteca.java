@@ -5,29 +5,31 @@ package frontend;
 
 import javax.swing.JFrame;
 
+import backend.Biblioteca;
+
 /**
  * @author Nicolás Londoño
  */
 public class InterfazBiblioteca extends JFrame 
 {
 	//----------------------------------------------------------------------------------
-		//Atributos y Constantes
+	//Atributos y Constantes
 	//----------------------------------------------------------------------------------
-	
+
 	/**
 	 * Constante de serialización
 	 */
 	private static final long serialVersionUID = 1L;
 
 	//----------------------------------------------------------------------------------
-		//Métodos
+	//Métodos
 	//----------------------------------------------------------------------------------
 	/*
 	 * Método constructor de la interfáz
 	 */
-	public InterfazBiblioteca()
+	public InterfazBiblioteca(Biblioteca servidorCupiBlog)
 	{
-		
+
 	}
 	/**
 	 * Método principal de la aplicación
@@ -35,7 +37,17 @@ public class InterfazBiblioteca extends JFrame
 	 */
 	public static void main(String[] args) 
 	{
-		// TODO Auto-generated method stub
+		try
+		{
+			String archivoPropiedades = "./data/config.properties";
+			Biblioteca biblioteca = new Biblioteca(archivoPropiedades);
+			InterfazBiblioteca interfaz = new InterfazBiblioteca(biblioteca);
+			interfaz.setVisible(true);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
 	}
 
