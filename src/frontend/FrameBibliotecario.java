@@ -217,8 +217,6 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		}
 	}
 
-
-
 	private void actualizarPanelLibro() 
 	{
 		txtTitulo.setText(libroActual.darTitulo());
@@ -261,6 +259,17 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 			{
 				e1.printStackTrace();
 			}
+		}
+		else if(e.getActionCommand().equals(AGREGAR))
+		{
+			new DialogoNuevoLibro(principal);
+		}
+		else if(e.getActionCommand().equals(ELIMINAR))
+		{
+			if( prestamoActual != null)
+				user.eliminarPrestamo(prestamoActual);
+			else
+				JOptionPane.showMessageDialog(this, "No hay un prestamo seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

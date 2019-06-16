@@ -106,5 +106,13 @@ public class Usuario
 		Prestamo x = new Prestamo(pLibro, nombre);
 		prestamos.add(x);
 	}
+	
+	/**
+	 * @param p Prestamo a eliminar.
+	 */
+	public void eliminarPrestamo(Prestamo p)
+	{
+		prestamos.remove(p);
+	}
 
 }
