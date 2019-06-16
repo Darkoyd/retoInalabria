@@ -10,7 +10,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
@@ -39,13 +38,13 @@ public class DialogoNuevoLibro extends JDialog implements ActionListener
 
 	private JTextField txtGenero;
 
-	private JTextArea txtSinopsis;
-
 	private JTextField txtEditorial;
 
 	private JButton agregar;
 
-	private final static String AGREGAR = "Agregar";
+	private final static String AGREGAR_LIBRO = "Agregar";
+	
+	private FrameBibliotecario frameBibliotecario;
 
 	//-----------------------------------------------------------------
 	//Métodos
@@ -54,38 +53,36 @@ public class DialogoNuevoLibro extends JDialog implements ActionListener
 	/**
 	 * Método constructod del dialogo.
 	 * @param pPrincipal Ventana principal de la aplicación.
+	 * @param pFrameBibliotecario Frame principal.
 	 */
-	public DialogoNuevoLibro(InterfazBiblioteca pPrincipal) 
+	public DialogoNuevoLibro(InterfazBiblioteca pPrincipal, FrameBibliotecario pFrameBibliotecario) 
 	{
 		principal = pPrincipal;
-		
+		frameBibliotecario = pFrameBibliotecario;
 		setTitle( "Registrar libro" );
-		setSize( 300, 800 );
+		setSize( 300, 300 );
 		setLayout( new BorderLayout( ) );
 		setVisible(true);
 
 		setLocationRelativeTo( null );
 		
 		JPanel panelCampos = new JPanel( );
-		panelCampos.setLayout( new GridLayout( 5, 2, 20, 20 ) );
+		panelCampos.setLayout( new GridLayout( 4, 2, 20, 20 ) );
 		panelCampos.setBorder( new TitledBorder( "Campos" ) );
 		
 		JLabel titulo = new JLabel("Titulo: ");
 		JLabel autor = new JLabel("Autor: ");
 		JLabel genero = new JLabel("Genero: ");
-		JLabel sinopsis = new JLabel("Sinopsis: ");
 		JLabel editorial = new JLabel("Editorial: ");
 		
 		txtTitulo = new JTextField();
 		txtAutor = new JTextField();
 		txtGenero = new JTextField();
-		txtSinopsis = new JTextArea();
 		txtEditorial = new JTextField();
 		
 		txtTitulo.setEditable(true);
 		txtAutor.setEditable(true);
 		txtGenero.setEditable(true);
-		txtSinopsis.setEditable(true);
 		txtEditorial.setEditable(true);
 		
 		panelCampos.add(titulo);
@@ -94,15 +91,13 @@ public class DialogoNuevoLibro extends JDialog implements ActionListener
 		panelCampos.add(txtAutor);
 		panelCampos.add(genero);
 		panelCampos.add(txtGenero);
-		panelCampos.add(sinopsis);
-		panelCampos.add(txtSinopsis);
 		panelCampos.add(editorial);
 		panelCampos.add(txtEditorial);
 		add(panelCampos, BorderLayout.CENTER);
 		
-		agregar = new JButton(AGREGAR);
+		agregar = new JButton(AGREGAR_LIBRO);
 		agregar.addActionListener(this);
-		agregar.setActionCommand(AGREGAR);
+		agregar.setActionCommand(AGREGAR_LIBRO);
 		add(agregar, BorderLayout.SOUTH);
 	}
 
@@ -111,22 +106,23 @@ public class DialogoNuevoLibro extends JDialog implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		if(e.getActionCommand().equals(AGREGAR))
+		if(e.getActionCommand().equals(AGREGAR_LIBRO))
 		{
-			String titulo = txtTitulo.getText();
-			String autor = txtAutor.getText();
-			String genero = txtGenero.getText();
-			String sinopsis = txtTitulo.getText();
-			String editorial = txtTitulo.getText();
-			if(titulo == null || titulo.equals(" ") || autor == null || autor.equals(" ") || genero == null || 
-					genero.equals(" ") || sinopsis == null || sinopsis.equals(" ") || editorial == null || editorial.equals(" "))
+			String titulo = txtTitulo.getText().trim();
+			String autor = txtAutor.getText().trim();
+			String genero = txtGenero.getText().trim();
+			String editorial = txtEditorial.getText().trim();
+			
+			if(titulo != null && !titulo.equals("") && autor != null && !autor.equals("") && genero != null && !genero.equals("") && editorial != null && !editorial.equals(""))
 			{
-				JOptionPane.showMessageDialog( this, "Por favor ingrese todos los datos.", "Registrar libro", JOptionPane.INFORMATION_MESSAGE );
+				principal.registrarLibro( titulo, autor, genero, editorial);
+				JOptionPane.showMessageDialog(this, "Se ha agregado el libro.", "Agregar libro", JOptionPane.INFORMATION_MESSAGE);
+				frameBibliotecario.actualizarLibros();
+				this.dispose( );
 			}
 			else
 			{
-				principal.registrarLibro( titulo, autor, genero, sinopsis, editorial);
-				this.dispose( );
+				JOptionPane.showMessageDialog( this, "Por favor ingrese todos los datos.", "Registrar libro", JOptionPane.INFORMATION_MESSAGE );
 			}
 		}
 	}

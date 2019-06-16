@@ -49,7 +49,7 @@ public class Prestamo
 	/**
 	 * @return usuario del prestamo.
 	 */
-	public String darUserLogin() 
+	public String darUserName() 
 	{
 		return userName;
 	}

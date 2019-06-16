@@ -70,7 +70,7 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 		setTitle("Biblioteca Virtual");
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(300, 300);
+		setSize(315, 380);
 		
 		setLayout(new BorderLayout());
 		
@@ -92,6 +92,11 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 		botones.add(btnSalida);
 		
 		add(botones, BorderLayout.SOUTH);
+		
+		JLabel intro = new JLabel();
+		ImageIcon imagen = new ImageIcon("./data/Intro.png");
+		intro.setIcon(imagen);
+		add(intro, BorderLayout.CENTER);
 	}
 	
 	/**
@@ -156,14 +161,13 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	 * @param titulo Titulo del libro.
 	 * @param autor Autor del libro.
 	 * @param genero Género literario del libro.
-	 * @param sinopsis Resumen breve del libro.
 	 * @param editorial Editorial del libro.
 	 */
-	public void registrarLibro(String titulo, String autor, String genero, String sinopsis, String editorial)
+	public void registrarLibro(String titulo, String autor, String genero, String editorial)
 	{
 		try
 		{
-			backEnd.darAdmin().registrarLibro(titulo, autor, genero, sinopsis, editorial);
+			backEnd.darAdmin().registrarLibro(titulo, autor, genero, editorial);
 		}
 		catch (SQLException e)
 		{
@@ -246,5 +250,6 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 			}
 		}
 	}
+
 
 }

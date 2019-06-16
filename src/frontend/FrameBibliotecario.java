@@ -1,6 +1,7 @@
 package frontend;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,14 +26,12 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 {
 
 	//-----------------------------------------------------------------
-		//Atributos y constantes
+	//Atributos y constantes
 	//-----------------------------------------------------------------
 	/**
 	 * Constante de serializacion.
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private final static String ACTUALIZAR = "Actualizar";
 
 	private final static String PRESTAR = "Prestar Libro";
 
@@ -41,6 +40,8 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 	private final static String AGREGAR = "Agregar Libro";
 
 	private final static String ELIMINAR = "Eliminar prestamo";
+
+	private final static String GOLDY_BORRE_TODO = "Goldy, borre todo!";
 
 	/**
 	 * Asocioacion con la ventana principal.
@@ -58,7 +59,6 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 
 	private JTextField txtGenero;
 
-	private JTextArea txtSinopsis;
 
 	private JTextField txtEditorial;
 
@@ -67,8 +67,8 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 	private JList<Object> prestamos;
 
 	private Collection<Libro> listaLibros;
-
-	private JButton actualizar;
+	
+	private Collection<Prestamo> listaPrestamos;
 
 	private JButton prestar;
 
@@ -82,9 +82,11 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 
 	private Prestamo prestamoActual;
 
+	private JButton goldyBorreTodo;
+
 
 	//-----------------------------------------------------------------
-		//Métodos
+	//Métodos
 	//-----------------------------------------------------------------
 
 	/**
@@ -95,34 +97,46 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 	public FrameBibliotecario(Usuario pUsuario, InterfazBiblioteca pPrincipal) 
 	{
 		listaLibros = new LinkedList<>();
+		listaPrestamos = new LinkedList<>();
+		
 		user = pUsuario;
 		principal = pPrincipal;
 		setTitle("Biblioteca Virtual - Bienvenido");
 		setVisible(true);
-		setSize(1000, 1000);
+		setSize(820, 600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
+		BorderLayout lo = new BorderLayout();
+		lo.setHgap(20);
+		lo.setVgap(20);
+		setLayout(lo);
 
-		//libro
+
+		//Banner
+		JLabel banner = new JLabel();
+		ImageIcon img = new ImageIcon("./data/Banner.png");
+		banner.setIcon(img);
+		add(banner, BorderLayout.NORTH);
+
+		//Libro
 		JPanel infoLibro = new JPanel();
 		infoLibro.setBorder(new TitledBorder("Información del Libro"));
-		infoLibro.setLayout(new GridLayout(5, 2));
+		infoLibro.setLayout(new GridLayout(4, 2, 0, 50));
 		JLabel titulo = new JLabel("Titulo: ");
 		JLabel autor = new JLabel("Autor: ");
 		JLabel genero = new JLabel("Genero: ");
-		JLabel sinopsis = new JLabel("Sinopsis: ");
 		JLabel editorial = new JLabel("Editorial: ");
 
 		txtTitulo = new JTextField();
 		txtAutor = new JTextField();
 		txtGenero = new JTextField();
-		txtSinopsis = new JTextArea();
 		txtEditorial = new JTextField();
+
+
 
 		txtTitulo.setEditable(false);
 		txtAutor.setEditable(false);
 		txtGenero.setEditable(false);
-		txtSinopsis.setEditable(false);
+
 		txtEditorial.setEditable(false);
 
 		infoLibro.add(titulo);
@@ -131,8 +145,6 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		infoLibro.add(txtAutor);
 		infoLibro.add(genero);
 		infoLibro.add(txtGenero);
-		infoLibro.add(sinopsis);
-		infoLibro.add(txtSinopsis);
 		infoLibro.add(editorial);
 		infoLibro.add(txtEditorial);
 		add(infoLibro, BorderLayout.CENTER);
@@ -140,14 +152,15 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 
 		//listas
 		JPanel listas = new JPanel();
-		listas.setLayout(new GridLayout(2, 1));
-		
+		listas.setPreferredSize(new Dimension(300, 600));
+		listas.setLayout(new GridLayout(2, 1, 0, 30));
+
 		libros = new JList<Object>();
 		prestamos = new JList<Object>();
-		
+
 		libros.setVisible(true);
 		prestamos.setVisible(true);
-		
+
 		prestamos.setBorder(new TitledBorder("Lista de prestamos"));
 		prestamos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -167,41 +180,35 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		//opciones
 		JPanel opciones = new JPanel();
 		opciones.setLayout(new GridLayout(1, 5));
-		actualizar = new JButton(ACTUALIZAR);
+		goldyBorreTodo = new JButton(GOLDY_BORRE_TODO);
 		prestar = new JButton(PRESTAR);
 		registrar = new JButton(REGISTRAR);
 		agregar = new JButton(AGREGAR);
 		eliminar = new JButton(ELIMINAR);
 
-		actualizar.addActionListener(this);
+		goldyBorreTodo.addActionListener(this);
 		prestar.addActionListener(this);
 		registrar.addActionListener(this);
 		agregar.addActionListener(this);
 		eliminar.addActionListener(this);
 
-		actualizar.setActionCommand(ACTUALIZAR);
+		goldyBorreTodo.setActionCommand(GOLDY_BORRE_TODO);
 		prestar.setActionCommand(PRESTAR);
 		registrar.setActionCommand(REGISTRAR);
 		agregar.setActionCommand(AGREGAR);
 		eliminar.setActionCommand(ELIMINAR);
 
-		opciones.add(actualizar);
+		//Botón para borrar toda la BD, usar en caso de emergencia o en caso de modificar la BD :^]
+		//opciones.add(goldyBorreTodo);
+		
 		opciones.add(prestar);
-		opciones.add(registrar);
 		opciones.add(agregar);
 		opciones.add(eliminar);
+		opciones.add(registrar);
 
 		add(opciones, BorderLayout.SOUTH);
-	}
-
-
-	/**
-	 * Actualiza la lista de libros
-	 */
-	public void actualizarLibros()
-	{
-		listaLibros = principal.darBack().darAdmin().consultarLibros();
-		libros.setListData(listaLibros.toArray());
+		actualizarLibros();
+		actualizarListaPrestamos();
 	}
 
 	@Override
@@ -227,46 +234,55 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		{
 			new DialogoRegistro(principal);
 		}
-		else if(e.getActionCommand().equals(ACTUALIZAR))
-		{
-			actualizarLibros();
-		}
+		
 		else if(e.getActionCommand().equals(PRESTAR))
 		{
 			if(libroActual == null)
 			{
 				JOptionPane.showMessageDialog(this, "Seleccione un libro a prestar.", "Error", JOptionPane.ERROR_MESSAGE);
+				
 			} 
 			else
 				try 
 			{
-					String x = JOptionPane.showInputDialog(this, "Inserte nombre del cliente.");
-					if(x == null || x.equals(" "))
+					String x = JOptionPane.showInputDialog(this, "Inserte nombre del cliente.").trim();
+					if(x == null || x.equals(""))
 					{
 						JOptionPane.showMessageDialog(this, "Nombre invalido.", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					else
-						user.agregarPrestamo(libroActual.darTitulo(), x);
+					{
+						user.agregarPrestamo(x, libroActual.darTitulo());
+						principal.darBack().darAdmin().registrarPrestamo(x, libroActual.darTitulo());
+						actualizarListaPrestamos();
+					}
 			} 
 			catch (Exception e1) 
 			{
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		else if(e.getActionCommand().equals(AGREGAR))
 		{
-			new DialogoNuevoLibro(principal);
+			new DialogoNuevoLibro(principal, this);
 		}
 		else if(e.getActionCommand().equals(ELIMINAR))
 		{
 			if( prestamoActual != null)
 			{
 				user.eliminarPrestamo(prestamoActual);
+				principal.darBack().darAdmin().borrarRegistroPrestamo(prestamoActual.darUserName(), prestamoActual.darTituloLibro());
+				JOptionPane.showMessageDialog(this, "Se ha eliminado el prestamo.", "Prestamo", JOptionPane.INFORMATION_MESSAGE);
 				actualizarListaPrestamos();
 			}
 			else
 				JOptionPane.showMessageDialog(this, "No hay un prestamo seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
+		else if(e.getActionCommand().equals((GOLDY_BORRE_TODO)))
+		{
+			principal.darBack().darAdmin().borrarTodo();
+		}
+
 	}
 
 
@@ -275,14 +291,23 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		txtTitulo.setText(libroActual.darTitulo());
 		txtAutor.setText(libroActual.darAutor());
 		txtGenero.setText(libroActual.darGenero());
-		txtSinopsis.setText(libroActual.darSinopsis());
 		txtEditorial.setText(libroActual.darEditorial());
 	}
 
 
+	/**
+	 * Actualiza la lista de libros
+	 */
+	public void actualizarLibros()
+	{
+		listaLibros = principal.darBack().darAdmin().consultarLibros();
+		libros.setListData(listaLibros.toArray());
+	}
+
 	private void actualizarListaPrestamos() 
 	{
-		prestamos.setListData((Prestamo[]) user.darPrestamos().toArray());
+		listaPrestamos = principal.darBack().darAdmin().consultarPrestamos();
+		prestamos.setListData( listaPrestamos.toArray());
 	}
 
 }

@@ -71,15 +71,6 @@ public class Administrador {
 	}
 
 	/**
-	 * Metodo de aserción de invariante.
-	 */
-	private void verificarInvariante() 
-	{
-		assert config != null : "Conjunto de propiedades inválidas";
-	
-	}
-	
-	/**
 	 * Método que inicia la tabla de usuarios.
 	 * @throws SQLException si hay un error de SQL.
 	 */
@@ -154,7 +145,7 @@ public class Administrador {
 		}
 		if( crearTabla )
 		{
-			s.execute( "CREATE TABLE libros (titulo varchar(100), autor varchar(64), genero varchar(32), sinopsis varchar(10000), editorial varchar(32), PRIMARY KEY (titulo))");
+			s.execute( "CREATE TABLE libros (titulo varchar(100), autor varchar(64), genero varchar(32), editorial varchar(32), PRIMARY KEY (titulo))");
 		}
 
 		s.close( );
@@ -244,10 +235,9 @@ public class Administrador {
 			{
 				String autor =  resultado.getString(2);
 				String genero =  resultado.getString(3);
-				String sinopsis =  resultado.getString(4);
-				String editorial =  resultado.getString(5);
+				String editorial =  resultado.getString(4);
 				
-				registro = new Libro( titulo, autor, genero, sinopsis, editorial);
+				registro = new Libro( titulo, autor, genero, editorial);
 				resultado.close( );
 			}
 			else
@@ -272,16 +262,15 @@ public class Administrador {
 	 * @param titulo Titulo del libro.
 	 * @param autor Autor del libro.
 	 * @param genero Genero del libro.
-	 * @param sinopsis Sinopsis del libro.
 	 * @param editorial Editorial del libro.
 	 * @return true si se pudo registrar el libro.
 	 * @throws SQLException si ocurrio un error de SQL.
 	 */
-	public boolean registrarLibro(String titulo, String autor, String genero, String sinopsis, String editorial) throws SQLException
+	public boolean registrarLibro(String titulo, String autor, String genero, String editorial) throws SQLException
 	{
 		if(consultarLibro(titulo) == null)
 		{
-			String sql = "INSERT INTO libros (titulo, autor, genero, sinopsis, editorial) VALUES ('"+ titulo +"','"+ autor +"','"+ genero +"','"+ sinopsis +"','"+ editorial +"')";
+			String sql = "INSERT INTO libros (titulo, autor, genero, editorial) VALUES ('"+ titulo +"','"+ autor +"','"+ genero + "','"+ editorial +"')";
 			Statement st = conexion.createStatement();
 			st.execute(sql);
 			return true;
@@ -339,7 +328,7 @@ public class Administrador {
 	 */
 	public boolean registrarPrestamo(String nombre, String titulo) throws SQLException
 	{
-		if(consultarLibro(titulo) == null)
+		if(consultarPrestamo(nombre, titulo) == null)
 		{
 			String sql = "INSERT INTO prestamos (nombre, titulo) VALUES ('"+ nombre +"','"+ titulo +"')";
 			Statement st = conexion.createStatement();
@@ -369,9 +358,8 @@ public class Administrador {
 				String titulo = resultado.getString(1);
 				String autor =  resultado.getString(2);
 				String genero =  resultado.getString(3);
-				String sinopsis =  resultado.getString(4);
-				String editorial =  resultado.getString(5);
-				Libro registroLibro = new Libro( titulo, autor, genero, sinopsis, editorial);
+				String editorial =  resultado.getString(4);
+				Libro registroLibro = new Libro( titulo, autor, genero, editorial);
 				registros.add(registroLibro);
 			}
 			resultado.close( );
@@ -386,7 +374,7 @@ public class Administrador {
 	}
 	
 	/**
-	 * @return Todos los libros de la DB.
+	 * @return Todos los prestamos de la DB.
 	 */
 	public Collection<Prestamo> consultarPrestamos()
 	{
@@ -412,5 +400,55 @@ public class Administrador {
 			e.printStackTrace();
 		}
 		return registros;
+	}
+	
+	/**
+	 * Método que elimina un prestamo.
+	 * @param nombre Nombre de quien se le presta el libro.
+	 * @param titulo Titulo del libro prestado.
+	 * 
+	 */
+	public void borrarRegistroPrestamo(String nombre, String titulo)
+	{
+		if(consultarPrestamo(nombre, titulo) != null)
+		{
+			String sql = "DELETE FROM prestamos WHERE nombre = '"+ nombre + "' AND titulo = '" + titulo + "'";
+			try
+			{
+				Statement st = conexion.createStatement();
+				st.execute(sql);
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * Borra todo el contenido de las tablas.
+	 */
+	public void borrarTodo()
+	{
+		try
+		{
+		Statement st = conexion.createStatement();
+		st.execute("DROP TABLE usuarios");
+		st.execute("DROP TABLE prestamos");
+		st.execute("DROP TABLE libros");
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Metodo de aserción de invariante.
+	 */
+	private void verificarInvariante() 
+	{
+		assert config != null : "Conjunto de propiedades inválidas";
+	
 	}
 }

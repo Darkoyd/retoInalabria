@@ -29,11 +29,6 @@ public class Libro
 	private String genero;
 	
 	/*
-	 * Breve resumen del libro.
-	 */
-	private String sinopsis;
-	
-	/*
 	 * Editorial del libro.
 	 */
 	private String editorial;
@@ -47,17 +42,15 @@ public class Libro
 	 * @param pTitulo Titulo del libro.
 	 * @param pAutor Autor(es) del libro.
 	 * @param pGenero Género literario del libro.
-	 * @param pSinopsis Resumen breve del libro.
 	 * @param pEditorial Editorial del libro.
 
 	 */
 	
-	public Libro(String pTitulo, String pAutor, String pGenero, String pSinopsis, String pEditorial) 
+	public Libro(String pTitulo, String pAutor, String pGenero, String pEditorial) 
 	{
 		titulo = pTitulo;
 		autor = pAutor;
 		genero = pGenero;
-		sinopsis = pSinopsis;
 		editorial = pEditorial;
 		
 	}
@@ -86,14 +79,6 @@ public class Libro
 	public String darGenero()
 	{
 		return genero;
-	}
-
-	/**
-	 * @return sinopsis del libro
-	 */
-	public String darSinopsis() 
-	{
-		return sinopsis;
 	}
 
 	/**
