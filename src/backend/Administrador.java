@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
+
 /**
  * @author Nicolás Londoño
  *
@@ -298,7 +299,7 @@ public class Administrador {
 	 * @param titulo Titulo del libro prestado.
 	 * @return Prestamo consultado, retorna null si no se encuentra.
 	 */
-	public Prestamo consultarPrestamos(String nombre, String titulo)
+	public Prestamo consultarPrestamo(String nombre, String titulo)
 	{
 		Prestamo registro = null;
 		try 
@@ -311,7 +312,7 @@ public class Administrador {
 			if( resultado.next( ) )
 			{
 				String fecha = resultado.getString(3);
-				registro = new Prestamo( titulo, nombre, fecha);
+				registro = new Prestamo( nombre, titulo, fecha);
 				resultado.close( );
 			}
 			else
@@ -352,5 +353,65 @@ public class Administrador {
 		{
 			return false;
 		}
+	}
+
+	/**
+	 * @return Todos los libros de la BD.
+	 */
+	public Collection<Libro> consultarLibros() 
+	{
+		Collection<Libro> registros = new LinkedList<>();
+		String sql = "SELECT * FROM libros";
+		try
+		{
+			Statement st = conexion.createStatement();
+			ResultSet resultado = st.executeQuery(sql);
+
+			while(resultado.next())
+			{
+				String titulo = resultado.getString(1);
+				String autor =  resultado.getString(2);
+				String genero =  resultado.getString(3);
+				String sinopsis =  resultado.getString(4);
+				String editorial =  resultado.getString(5);
+				Libro registroLibro = new Libro( titulo, autor, genero, sinopsis, editorial);
+				registros.add(registroLibro);
+			}
+			resultado.close( );
+			st.close( );
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return registros;
+	}
+	
+	public Collection<Prestamo> consultarPrestamos()
+	{
+		Collection<Prestamo> registros = new LinkedList<>();
+		String sql = "SELECT * FROM prestamos";
+		try
+		{
+			Statement st = conexion.createStatement( );
+			ResultSet resultado = st.executeQuery( sql );
+	
+			while( resultado.next( ) )
+			{
+				String nombre = resultado.getString(1);
+				String titulo = resultado.getString(2);
+				String fecha = resultado.getString(3);
+				Prestamo registroPrestamo = new Prestamo( nombre, titulo, fecha);
+				registros.add(registroPrestamo);
+			}
+			resultado.close();
+			st.close();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return registros;
 	}
 }

@@ -95,6 +95,14 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	}
 	
 	/**
+	 * @return El backend del programa.
+	 */
+	public Biblioteca darBack()
+	{
+		return backEnd;
+	}
+	
+	/**
 	 * Método principal de la aplicación
 	 * @param args
 	 */
@@ -237,7 +245,7 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	 */
 	public Prestamo consultarPrestamo(String nombre, String titulo)
 	{
-		return backEnd.darAdmin().consultarPrestamos(nombre, titulo);
+		return backEnd.darAdmin().consultarPrestamo(nombre, titulo);
 	}
 
 }
