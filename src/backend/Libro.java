@@ -48,6 +48,11 @@ public class Libro
 	 */
 	private int calificacion;
 	
+	/*
+	 * Veces que el libro ha sido calificado.
+	 */
+	private int vecesCalificado;
+	
 	//-----------------------------------------------------------------
 		//Métodos
 	//-----------------------------------------------------------------
@@ -59,9 +64,11 @@ public class Libro
 	 * @param pSinopsis Resumen breve del libro.
 	 * @param pEditorial Editorial del libro.
 	 * @param pCantidad Cantidad disponible para prestamo.
+	 * @param pCalificacion Calificacion del libro.
+	 * @param pVecesCalificado Veces que ha sido calificado el libro.
 	 */
 	
-	public Libro(String pTitulo, String pAutor, String pGenero, String pSinopsis, String pEditorial, int pCantidad) 
+	public Libro(String pTitulo, String pAutor, String pGenero, String pSinopsis, String pEditorial, int pCantidad, int pCalificacion, int pVecesCalificado) 
 	{
 		titulo = pTitulo;
 		autor = pAutor;
@@ -69,7 +76,16 @@ public class Libro
 		sinopsis = pSinopsis;
 		editorial = pEditorial;
 		cantidad = pCantidad;
-		calificacion = 0;
+		calificacion = pCalificacion;
+		vecesCalificado = pVecesCalificado;
+	}
+
+	/**
+	 * @return vecesCalificado de la clase
+	 */
+	public int darVecesCalificado() 
+	{
+		return vecesCalificado;
 	}
 
 	/**

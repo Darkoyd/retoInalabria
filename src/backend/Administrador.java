@@ -6,6 +6,7 @@ package backend;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 /**
  * @author Nicolás Londoño
@@ -133,6 +134,33 @@ public class Administrador {
 		s.close( );
 		verificarInvariante();
 	}
+	
+	/**
+	 * Método que inicia la tabla de libros.
+	 * @throws SQLException si ocurre un problema de SQL.
+	 */
+	public void iniciarTablaLibros() throws SQLException
+	{
+		Statement s = conexion.createStatement( );
+
+		boolean crearTabla = false;
+		try
+		{
+			s.executeQuery( "SELECT * FROM libros WHERE 1=2" );
+		}
+		catch( SQLException se )
+		{
+			crearTabla = true;
+		}
+		if( crearTabla )
+		{
+			s.execute( "CREATE TABLE libros (titulo varchar(100), autor varchar(64), genero varchar(32), sinopsis varchar(10000), editorial varchar(32), cantidad int, calificacion int, veces-calificado int), PRIMARY KEY (titulo))" );
+		}
+
+		s.close( );
+		verificarInvariante();
+	}
+	
 
 	/**
 	 * Método que consulta la BD por los usuarios.
@@ -143,7 +171,6 @@ public class Administrador {
 	public Usuario consultarUsuario(String login, String contrasena) 
 	{
 		Usuario registro = null;
-
 		try 
 		{
 			String sql = "SELECT * FROM usuarios WHERE login ='" + login + "' AND contrasena ='" + contrasena +"'" ;
@@ -205,4 +232,135 @@ public class Administrador {
 		}
 	}
 
+	/**
+	 * Método que consulta la BD por los libros.
+	 * @param titulo Titulo del libro a buscar.
+	 * @return Libro consultado, retorna null de no encontrarlo.
+	 */
+	public Libro consultarLibro(String titulo)
+	{
+		Libro registro = null;
+		try 
+		{
+			String sql = "SELECT * FROM libros WHERE titulo ='" + titulo + "'" ;
+	
+			Statement st = conexion.createStatement( );
+			ResultSet resultado = st.executeQuery( sql );
+	
+			if( resultado.next( ) )
+			{
+				String autor =  resultado.getString(2);
+				String genero =  resultado.getString(3);
+				String sinopsis =  resultado.getString(4);
+				String editorial =  resultado.getString(5);
+				int cantidad = resultado.getInt(6);
+				int calificacion = resultado.getInt(7);
+				int veces = resultado.getInt(8);
+				registro = new Libro( titulo, autor, genero, sinopsis, editorial, cantidad, calificacion, veces);
+				resultado.close( );
+			}
+			else
+			{
+				resultado.close( );
+				return null;
+			}
+	
+			st.close( );
+		} 
+		catch (SQLException e) 
+		{
+	
+			e.printStackTrace();
+		}
+		verificarInvariante();
+		return registro;
+	}
+
+	/**
+	 * Método que registra un libro a la BD.
+	 * @param titulo Titulo del libro.
+	 * @param autor Autor del libro.
+	 * @param genero Genero del libro.
+	 * @param sinopsis Sinopsis del libro.
+	 * @param editorial Editorial del libro.
+	 * @param cantidad Cantidad de unidades del libro.
+	 * @return true si se pudo registrar el libro.
+	 * @throws SQLException si ocurrio un error de SQL.
+	 */
+	public boolean registrarLibro(String titulo, String autor, String genero, String sinopsis, String editorial, int cantidad) throws SQLException
+	{
+		if(consultarLibro(titulo) == null)
+		{
+			String sql = "INSERT INTO libros (titulo, autor, genero, sinopsis, editorial, cantidad, calificacion, veces-calificado) VALUES ('"+ titulo +"','"+ autor +"','"+ genero +"','"+ sinopsis +"','"+ editorial +"', " + cantidad + ", 0, 0)";
+			Statement st = conexion.createStatement();
+			st.execute(sql);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * Método que consulta la tabla de prestamos.
+	 * @param login Login del usuario al que se le presta.
+	 * @param titulo Titulo del libro prestado.
+	 * @return Prestamo consultado, retorna null si no se encuentra.
+	 */
+	public Prestamo consultarPrestamos(String login, String titulo)
+	{
+		Prestamo registro = null;
+		try 
+		{
+			String sql = "SELECT * FROM prestamos WHERE login ='" + login + "' AND titulo = '" + titulo + "'" ;
+	
+			Statement st = conexion.createStatement( );
+			ResultSet resultado = st.executeQuery( sql );
+	
+			if( resultado.next( ) )
+			{
+				String fecha = resultado.getString(3);
+				registro = new Prestamo( titulo, login, fecha);
+				resultado.close( );
+			}
+			else
+			{
+				resultado.close( );
+				return null;
+			}
+	
+			st.close( );
+		} 
+		catch (SQLException e) 
+		{
+	
+			e.printStackTrace();
+		}
+		verificarInvariante();
+		return registro;
+	}
+	
+	/**
+	 * Método que registra un prestamo.
+	 * @param login Login del usuario al que se le presta.
+	 * @param titulo Titulo del libro prestado.
+	 * @param fecha Fecha de entrega.
+	 * @return true si se pudo registrar el prestamo.
+	 * @throws SQLException si ocurre un error de SQL.
+	 */
+	public boolean registrarPrestamo(String login, String titulo, Date fecha) throws SQLException
+	{
+		if(consultarLibro(titulo) == null)
+		{
+			String sql = "INSERT INTO prestamos (login, titulo, fecha) VALUES ('"+ login +"','"+ titulo +"','"+ fecha +"')";
+			Statement st = conexion.createStatement();
+			st.execute(sql);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

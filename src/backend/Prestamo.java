@@ -1,7 +1,5 @@
 package backend;
 
-import java.util.Date;
-
 /**
  * Clase que representa un prestamo.
  * @author Nicolas Londoño
@@ -16,17 +14,17 @@ public class Prestamo
 	/**
 	 * Libro a prestar.
 	 */
-	private Libro libro;
+	private String libro;
 	
 	/*
 	 * Usuario que hace el prestamo.
 	 */
-	private Usuario user;
+	private String user;
 	
 	/*
 	 * Fecha de entrega.
 	 */
-	private Date plazo;
+	private String plazo;
 
 	//-----------------------------------------------------------------
 		//Métodos
@@ -38,7 +36,7 @@ public class Prestamo
 	 * @param pUser Usuario que presta
 	 * @param pPlazo Fecha de entrega del libro.
 	 */
-	public Prestamo(Libro pLibro, Usuario pUser, Date pPlazo) 
+	public Prestamo(String pLibro, String pUser, String pPlazo) 
 	{
 		libro = pLibro;
 		user = pUser;
@@ -48,7 +46,7 @@ public class Prestamo
 	/**
 	 * @return libro del prestamo.
 	 */
-	public Libro darLibro() 
+	public String darLibro() 
 	{
 		return libro;
 	}
@@ -56,7 +54,7 @@ public class Prestamo
 	/**
 	 * @return usuario del prestamo.
 	 */
-	public Usuario darUser() 
+	public String darUser() 
 	{
 		return user;
 	}
@@ -64,7 +62,7 @@ public class Prestamo
 	/**
 	 * @return plazo de la clase
 	 */
-	public Date darPlazo() 
+	public String darPlazo() 
 	{
 		return plazo;
 	}
