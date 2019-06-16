@@ -154,7 +154,7 @@ public class Administrador {
 		}
 		if( crearTabla )
 		{
-			s.execute( "CREATE TABLE libros (titulo varchar(100), autor varchar(64), genero varchar(32), sinopsis varchar(10000), editorial varchar(32), cantidad int, calificacion int, veces-calificado int), PRIMARY KEY (titulo))" );
+			s.execute( "CREATE TABLE libros (titulo varchar(100), autor varchar(64), genero varchar(32), sinopsis varchar(10000), editorial varchar(32)), PRIMARY KEY (titulo))" );
 		}
 
 		s.close( );
@@ -253,10 +253,8 @@ public class Administrador {
 				String genero =  resultado.getString(3);
 				String sinopsis =  resultado.getString(4);
 				String editorial =  resultado.getString(5);
-				int cantidad = resultado.getInt(6);
-				int calificacion = resultado.getInt(7);
-				int veces = resultado.getInt(8);
-				registro = new Libro( titulo, autor, genero, sinopsis, editorial, cantidad, calificacion, veces);
+				
+				registro = new Libro( titulo, autor, genero, sinopsis, editorial);
 				resultado.close( );
 			}
 			else
@@ -283,15 +281,14 @@ public class Administrador {
 	 * @param genero Genero del libro.
 	 * @param sinopsis Sinopsis del libro.
 	 * @param editorial Editorial del libro.
-	 * @param cantidad Cantidad de unidades del libro.
 	 * @return true si se pudo registrar el libro.
 	 * @throws SQLException si ocurrio un error de SQL.
 	 */
-	public boolean registrarLibro(String titulo, String autor, String genero, String sinopsis, String editorial, int cantidad) throws SQLException
+	public boolean registrarLibro(String titulo, String autor, String genero, String sinopsis, String editorial) throws SQLException
 	{
 		if(consultarLibro(titulo) == null)
 		{
-			String sql = "INSERT INTO libros (titulo, autor, genero, sinopsis, editorial, cantidad, calificacion, veces-calificado) VALUES ('"+ titulo +"','"+ autor +"','"+ genero +"','"+ sinopsis +"','"+ editorial +"', " + cantidad + ", 0, 0)";
+			String sql = "INSERT INTO libros (titulo, autor, genero, sinopsis, editorial) VALUES ('"+ titulo +"','"+ autor +"','"+ genero +"','"+ sinopsis +"','"+ editorial +"')";
 			Statement st = conexion.createStatement();
 			st.execute(sql);
 			return true;

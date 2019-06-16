@@ -14,12 +14,12 @@ public class Prestamo
 	/**
 	 * Libro a prestar.
 	 */
-	private String libro;
+	private String tituloLibro;
 	
 	/*
 	 * Usuario que hace el prestamo.
 	 */
-	private String user;
+	private String userLogin;
 	
 	/*
 	 * Fecha de entrega.
@@ -38,25 +38,25 @@ public class Prestamo
 	 */
 	public Prestamo(String pLibro, String pUser, String pPlazo) 
 	{
-		libro = pLibro;
-		user = pUser;
+		tituloLibro = pLibro;
+		userLogin = pUser;
 		plazo = pPlazo;
 	}
 
 	/**
 	 * @return libro del prestamo.
 	 */
-	public String darLibro() 
+	public String darTituloLibro() 
 	{
-		return libro;
+		return tituloLibro;
 	}
 
 	/**
 	 * @return usuario del prestamo.
 	 */
-	public String darUser() 
+	public String darUserLogin() 
 	{
-		return user;
+		return userLogin;
 	}
 
 	/**

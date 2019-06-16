@@ -1,7 +1,6 @@
 package backend;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -108,17 +107,17 @@ public class Usuario
 	 * @param pPlazo Plazo de entrega del libro
 	 * @throws Exception si ya se tiene el libro en los prestamos.
 	 */
-	public void agregarPrestamo(Libro pLibro, Date pPlazo) throws Exception
+	public void agregarPrestamo(String pLibro, String pPlazo) throws Exception
 	{
 		Iterator<Prestamo> iter = prestamos.iterator();
 		while(iter.hasNext())
 		{
-			if(iter.next().darLibro().darTitulo().equals(pLibro.darTitulo()))
+			if(iter.next().darTituloLibro().equals(pLibro))
 			{
 				throw new Exception("Ya tiene este libro.");
 			}
 		}
-		Prestamo x = new Prestamo(pLibro, this, pPlazo);
+		Prestamo x = new Prestamo(pLibro, this.darLogin(), pPlazo);
 		prestamos.add(x);
 	}
 
