@@ -90,10 +90,10 @@ public class Usuario
 	/**
 	 * Método que agrega un prestamo al usuario.
 	 * @param pLibro Libro a prestar
-	 * @param pPlazo Plazo de entrega del libro
+	 * @param nombre Nombre a quien se le presta el libro.
 	 * @throws Exception si ya se tiene el libro en los prestamos.
 	 */
-	public void agregarPrestamo(String pLibro, String pPlazo) throws Exception
+	public void agregarPrestamo(String pLibro, String nombre) throws Exception
 	{
 		Iterator<Prestamo> iter = prestamos.iterator();
 		while(iter.hasNext())
@@ -103,7 +103,7 @@ public class Usuario
 				throw new Exception("Ya se prestó este libro.");
 			}
 		}
-		Prestamo x = new Prestamo(pLibro, this.darLogin(), pPlazo);
+		Prestamo x = new Prestamo(pLibro, nombre);
 		prestamos.add(x);
 	}
 

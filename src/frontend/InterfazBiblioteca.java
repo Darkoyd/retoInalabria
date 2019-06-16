@@ -222,14 +222,13 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	/**
 	 * Método que registra un prestamo.
 	 * @param tituloLibro Titulo del libro a registrar
-	 * @param userName 
-	 * @param plazo
+	 * @param userName Nombre de quien se le presta el libro.
 	 */
-	public void registrarPrestamo(String tituloLibro, String userName, Date plazo)
+	public void registrarPrestamo(String tituloLibro, String userName)
 	{
 		try
 		{
-			backEnd.darAdmin().registrarPrestamo(userName, tituloLibro,  plazo);
+			backEnd.darAdmin().registrarPrestamo(userName, tituloLibro);
 		}
 		catch (SQLException e)
 		{

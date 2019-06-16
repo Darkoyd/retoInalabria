@@ -6,7 +6,6 @@ package backend;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-import java.util.Date;
 
 
 /**
@@ -129,7 +128,7 @@ public class Administrador {
 		}
 		if( crearTabla )
 		{
-			s.execute( "CREATE TABLE prestamos (nombre varchar(32), titulo varchar(100), fecha varchar (20), PRIMARY KEY (login, titulo))" );
+			s.execute( "CREATE TABLE prestamos (nombre varchar(32), titulo varchar(100), PRIMARY KEY (login, titulo))" );
 		}
 
 		s.close( );
@@ -311,8 +310,7 @@ public class Administrador {
 	
 			if( resultado.next( ) )
 			{
-				String fecha = resultado.getString(3);
-				registro = new Prestamo( nombre, titulo, fecha);
+				registro = new Prestamo( nombre, titulo);
 				resultado.close( );
 			}
 			else
@@ -336,15 +334,14 @@ public class Administrador {
 	 * Método que registra un prestamo.
 	 * @param nombre Login del usuario al que se le presta.
 	 * @param titulo Titulo del libro prestado.
-	 * @param fecha Fecha de entrega.
 	 * @return true si se pudo registrar el prestamo.
 	 * @throws SQLException si ocurre un error de SQL.
 	 */
-	public boolean registrarPrestamo(String nombre, String titulo, Date fecha) throws SQLException
+	public boolean registrarPrestamo(String nombre, String titulo) throws SQLException
 	{
 		if(consultarLibro(titulo) == null)
 		{
-			String sql = "INSERT INTO prestamos (nombre, titulo, fecha) VALUES ('"+ nombre +"','"+ titulo +"','"+ fecha +"')";
+			String sql = "INSERT INTO prestamos (nombre, titulo) VALUES ('"+ nombre +"','"+ titulo +"')";
 			Statement st = conexion.createStatement();
 			st.execute(sql);
 			return true;
@@ -388,6 +385,9 @@ public class Administrador {
 		return registros;
 	}
 	
+	/**
+	 * @return Todos los libros de la DB.
+	 */
 	public Collection<Prestamo> consultarPrestamos()
 	{
 		Collection<Prestamo> registros = new LinkedList<>();
@@ -401,8 +401,7 @@ public class Administrador {
 			{
 				String nombre = resultado.getString(1);
 				String titulo = resultado.getString(2);
-				String fecha = resultado.getString(3);
-				Prestamo registroPrestamo = new Prestamo( nombre, titulo, fecha);
+				Prestamo registroPrestamo = new Prestamo( nombre, titulo);
 				registros.add(registroPrestamo);
 			}
 			resultado.close();
