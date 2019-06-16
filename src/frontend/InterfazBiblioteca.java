@@ -3,16 +3,22 @@
  */
 package frontend;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 import backend.Biblioteca;
+import backend.Usuario;
 
 /**
  * @author Nicolás Londoño
  */
-public class InterfazBiblioteca extends JFrame 
+public class InterfazBiblioteca extends JFrame implements ActionListener
 {
 	//----------------------------------------------------------------------------------
 	//Atributos y Constantes
@@ -23,10 +29,30 @@ public class InterfazBiblioteca extends JFrame
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	/*
+	/**
 	 * Asociación con el Back End.
 	 */
 	private Biblioteca principal;
+	
+	/**
+	 * Botón de ingreso.
+	 */
+	private JButton btnIngreso;
+	
+	/**
+	 * Constante para el ingreso.
+	 */
+	private final static String INGRESO = "Ingresar";
+	
+	/**
+	 * Constante para la salida.
+	 */
+	private final static String SALIR = "Salir";
+	
+	/*
+	 * Botón de salida.
+	 */
+	private JButton btnSalida;
 
 	//----------------------------------------------------------------------------------
 	//Métodos
@@ -42,7 +68,28 @@ public class InterfazBiblioteca extends JFrame
 		setTitle("Biblioteca Virtual");
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(1000, 1000);
+		setSize(300, 300);
+		
+		setLayout(new BorderLayout());
+		
+		JPanel botones = new JPanel();
+		botones.setLayout(new GridLayout(1,2));
+		
+		
+		btnIngreso = new JButton(INGRESO);
+		btnSalida = new JButton(SALIR);
+		
+		btnIngreso.addActionListener(this);
+		btnSalida.addActionListener(this);
+		
+		btnIngreso.setActionCommand(INGRESO);
+		btnSalida.setActionCommand(SALIR);
+		
+		botones.setBorder(new TitledBorder("Ingresar:"));
+		botones.add(btnIngreso);
+		botones.add(btnSalida);
+		
+		add(botones, BorderLayout.SOUTH);
 	}
 	
 	/**
@@ -81,5 +128,33 @@ public class InterfazBiblioteca extends JFrame
         }
         System.exit( 0 );
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		if(e.getActionCommand() == INGRESO)
+		{
+			
+		}
+	}
+
+	/**
+	 * Método que registra al usuario.
+	 * @param login
+	 * @param nombre
+	 * @param contrasena
+	 * @param esBiblio 
+	 */
+	public void registrarUsuario(String login, String nombre, String contrasena, boolean esBiblio) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Usuario consultarUsuario(String login, String contrasena) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
 
 }

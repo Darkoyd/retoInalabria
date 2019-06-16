@@ -71,6 +71,63 @@ public class Libro
 		cantidad = pCantidad;
 		calificacion = 0;
 	}
+
+	/**
+	 * @return titulo del libro
+	 */
+	public String darTitulo() 
+	{
+		return titulo;
+	}
+
+	/**
+	 * @return autor del libro
+	 */
+	public String darAutor() 
+	{
+		return autor;
+	}
+
+	/**
+	 * @return genero del libro
+	 */
+	public String darGenero()
+	{
+		return genero;
+	}
+
+	/**
+	 * @return sinopsis del libro
+	 */
+	public String darSinopsis() 
+	{
+		return sinopsis;
+	}
+
+	/**
+	 * @return editorial del libro
+	 */
+	public String darEditorial() 
+	{
+		return editorial;
+	}
+
+	/**
+	 * @return cantidad de libros disponibles
+	 */
+	public int darCantidad() 
+	{
+		return cantidad;
+	}
+
+	/**
+	 * @return calificacion de la clase
+	 */
+	public int darCalificacion() 
+	{
+		return calificacion;
+	}
+
 	
 	
 
