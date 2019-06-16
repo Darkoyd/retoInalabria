@@ -99,8 +99,8 @@ public class Administrador {
 
 		if( crearTabla )
 		{
-			s.execute( "CREATE TABLE usuarios (nombre varchar(50), login varchar(32), contrasena varchar(32), esBiblio int, PRIMARY KEY (login))" );
-			String sql = "INSERT INTO usuarios (login, nombre, contrasena, esBiblio) VALUES ('admin', 'admin','admin' , 1)";
+			s.execute( "CREATE TABLE usuarios (nombre varchar(50), login varchar(32), contrasena varchar(32), PRIMARY KEY (login))" );
+			String sql = "INSERT INTO usuarios (login, nombre, contrasena) VALUES ('admin', 'admin','admin')";
 			Statement st = conexion.createStatement();
 			st.execute(sql);
 		}
@@ -128,7 +128,7 @@ public class Administrador {
 		}
 		if( crearTabla )
 		{
-			s.execute( "CREATE TABLE prestamos (login varchar(32), titulo varchar(100), fecha varchar (20), PRIMARY KEY (login, titulo))" );
+			s.execute( "CREATE TABLE prestamos (nombre varchar(32), titulo varchar(100), fecha varchar (20), PRIMARY KEY (login, titulo))" );
 		}
 
 		s.close( );
@@ -181,8 +181,7 @@ public class Administrador {
 			if( resultado.next( ) )
 			{
 				String nombre =  resultado.getString(1);
-				boolean esBiblio = resultado.getBoolean(4);
-				registro = new Usuario( nombre, login, contrasena, esBiblio);
+				registro = new Usuario( nombre, login, contrasena);
 				resultado.close( );
 			}
 			else
@@ -208,20 +207,14 @@ public class Administrador {
 	 * @param login Login del usuario.
 	 * @param nombre Nombre del usuario.
 	 * @param contrasena Contraseña del usuario
-	 * @param esBiblio Boolean si es bibliotecario.
 	 * @return true si se pudo registrar usuario.
 	 * @throws SQLException si ocurre un error de SQL.
 	 */
-	public boolean registrarUsuario(String login, String nombre, String contrasena, boolean esBiblio) throws SQLException
+	public boolean registrarUsuario(String login, String nombre, String contrasena) throws SQLException
 	{
 		if(consultarUsuario(login, contrasena) == null)
 		{
-			int x = 0;
-			if(esBiblio)
-			{
-				x = 1;
-			}
-		String sql = "INSERT INTO usuarios (login, nombre, contrasena, esBiblio) VALUES ('" + login + "', '" + nombre + "','" + contrasena + "' , " + x + ")";
+		String sql = "INSERT INTO usuarios (login, nombre, contrasena) VALUES ('" + login + "', '" + nombre + "','" + contrasena + "')";
 		Statement st = conexion.createStatement();
 		st.execute(sql);
 		return true;
@@ -301,16 +294,16 @@ public class Administrador {
 	
 	/**
 	 * Método que consulta la tabla de prestamos.
-	 * @param login Login del usuario al que se le presta.
+	 * @param nombre Login del usuario al que se le presta.
 	 * @param titulo Titulo del libro prestado.
 	 * @return Prestamo consultado, retorna null si no se encuentra.
 	 */
-	public Prestamo consultarPrestamos(String login, String titulo)
+	public Prestamo consultarPrestamos(String nombre, String titulo)
 	{
 		Prestamo registro = null;
 		try 
 		{
-			String sql = "SELECT * FROM prestamos WHERE login ='" + login + "' AND titulo = '" + titulo + "'" ;
+			String sql = "SELECT * FROM prestamos WHERE nombre ='" + nombre + "' AND titulo = '" + titulo + "'" ;
 	
 			Statement st = conexion.createStatement( );
 			ResultSet resultado = st.executeQuery( sql );
@@ -318,7 +311,7 @@ public class Administrador {
 			if( resultado.next( ) )
 			{
 				String fecha = resultado.getString(3);
-				registro = new Prestamo( titulo, login, fecha);
+				registro = new Prestamo( titulo, nombre, fecha);
 				resultado.close( );
 			}
 			else
@@ -340,17 +333,17 @@ public class Administrador {
 	
 	/**
 	 * Método que registra un prestamo.
-	 * @param login Login del usuario al que se le presta.
+	 * @param nombre Login del usuario al que se le presta.
 	 * @param titulo Titulo del libro prestado.
 	 * @param fecha Fecha de entrega.
 	 * @return true si se pudo registrar el prestamo.
 	 * @throws SQLException si ocurre un error de SQL.
 	 */
-	public boolean registrarPrestamo(String login, String titulo, Date fecha) throws SQLException
+	public boolean registrarPrestamo(String nombre, String titulo, Date fecha) throws SQLException
 	{
 		if(consultarLibro(titulo) == null)
 		{
-			String sql = "INSERT INTO prestamos (login, titulo, fecha) VALUES ('"+ login +"','"+ titulo +"','"+ fecha +"')";
+			String sql = "INSERT INTO prestamos (nombre, titulo, fecha) VALUES ('"+ nombre +"','"+ titulo +"','"+ fecha +"')";
 			Statement st = conexion.createStatement();
 			st.execute(sql);
 			return true;

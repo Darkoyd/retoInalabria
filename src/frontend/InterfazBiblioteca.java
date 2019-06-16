@@ -13,6 +13,8 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import backend.Biblioteca;
+import backend.Libro;
+import backend.Prestamo;
 import backend.Usuario;
 
 /**
@@ -32,7 +34,7 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	/**
 	 * Asociación con el Back End.
 	 */
-	private Biblioteca principal;
+	private Biblioteca backEnd;
 	
 	/**
 	 * Botón de ingreso.
@@ -64,7 +66,7 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	 */
 	public InterfazBiblioteca(Biblioteca biblo)
 	{
-		principal = biblo;
+		backEnd = biblo;
 		setTitle("Biblioteca Virtual");
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -120,7 +122,7 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
         super.dispose( );
         try
         {
-            principal.darAdmin( ).desconectarBD( );
+            backEnd.darAdmin( ).desconectarBD( );
         }
         catch( SQLException e )
         {
@@ -155,13 +157,12 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	 * @param login Login del usuario.
 	 * @param nombre Nombre del usuario.
 	 * @param contrasena Contraseña de ingreso.
-	 * @param esBiblio Booleano si el usuario es un bibliotecario.
 	 */
-	public void registrarUsuario(String login, String nombre, String contrasena, boolean esBiblio) 
+	public void registrarUsuario(String login, String nombre, String contrasena) 
 	{
 		try 
 		{
-			principal.darAdmin().registrarUsuario(login, nombre, contrasena, esBiblio);
+			backEnd.darAdmin().registrarUsuario(login, nombre, contrasena);
 		} 
 		catch (SQLException e) 
 		{
@@ -173,12 +174,70 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	 * Método que consulta en la DB por el usuario.
 	 * @param login Login del usuario.
 	 * @param contrasena Contraseña de ingreso.
-	 * @return Usuario con el login dado.
+	 * @return Usuario con el login dado, de no encontrarlo retorna null.
 	 */
 	public Usuario consultarUsuario(String login, String contrasena) 
 	{
-		return principal.darAdmin().consultarUsuario(login, contrasena);
-		
+		return backEnd.darAdmin().consultarUsuario(login, contrasena);
+	}
+	
+	/**
+	 * Método que registra un libro.
+	 * @param titulo Titulo del libro.
+	 * @param autor Autor del libro.
+	 * @param genero Género literario del libro.
+	 * @param sinopsis Resumen breve del libro.
+	 * @param editorial Editorial del libro.
+	 */
+	public void registrarLibro(String titulo, String autor, String genero, String sinopsis, String editorial)
+	{
+		try
+		{
+			backEnd.darAdmin().registrarLibro(titulo, autor, genero, sinopsis, editorial);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Método que consulta la BD por el libro
+	 * @param titulo Titulo del libro a buscar.
+	 * @return Libro con el titulo dado, de no encontrarlo retorna null.
+	 */
+	public Libro consultarLibro(String titulo)
+	{
+		return backEnd.darAdmin().consultarLibro(titulo);
+	}
+	
+	/**
+	 * Método que registra un prestamo.
+	 * @param tituloLibro Titulo del libro a registrar
+	 * @param userName 
+	 * @param plazo
+	 */
+	public void registrarPrestamo(String tituloLibro, String userName, Date plazo)
+	{
+		try
+		{
+			backEnd.darAdmin().registrarPrestamo(userName, tituloLibro,  plazo);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Método que consulta la BD por el prestamo.
+	 * @param nombre Nombre de quien prestó el libro.
+	 * @param titulo Titulo del libro.
+	 * @return Prestamo con los parametros anteriores, de no encontrar retorna null.
+	 */
+	public Prestamo consultarPrestamo(String nombre, String titulo)
+	{
+		return backEnd.darAdmin().consultarPrestamos(nombre, titulo);
 	}
 
 }

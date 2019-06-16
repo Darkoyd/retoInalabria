@@ -32,11 +32,6 @@ public class Usuario
 	private String contrasena;
 	
 	/**
-	 * Atributo que revisa si el usuario es un bibliotecario.
-	 */
-	private boolean bibliotecario;
-	
-	/**
 	 * Lista de prestamos.
 	 */
 	private Collection<Prestamo> prestamos;
@@ -50,14 +45,12 @@ public class Usuario
 	 * @param pNombre Nombre del usuario.
 	 * @param pLogin Login del usuario.
 	 * @param pContrasena Contraseña del usuario.
-	 * @param pBibliotecario Booleano que determina si el usuario es un bibliotecario o un cliente.
 	 */
-	public Usuario(String pNombre, String pLogin, String pContrasena, boolean pBibliotecario) 
+	public Usuario(String pNombre, String pLogin, String pContrasena) 
 	{
 		nombre = pNombre;
 		login = pLogin;
 		contrasena = pContrasena;
-		bibliotecario = pBibliotecario;
 		prestamos = new LinkedList<Prestamo>();
 	}
 	
@@ -93,13 +86,6 @@ public class Usuario
 		return prestamos;
 	}
 
-	/**
-	 * @return true si el usuario es un bibliotecario. false de lo contrario.
-	 */
-	public boolean esBibliotecario()
-	{
-		return bibliotecario;
-	}
 	
 	/**
 	 * Método que agrega un prestamo al usuario.
@@ -114,7 +100,7 @@ public class Usuario
 		{
 			if(iter.next().darTituloLibro().equals(pLibro))
 			{
-				throw new Exception("Ya tiene este libro.");
+				throw new Exception("Ya se prestó este libro.");
 			}
 		}
 		Prestamo x = new Prestamo(pLibro, this.darLogin(), pPlazo);

@@ -79,7 +79,7 @@ public class DialogoIngreso extends JDialog implements ActionListener
 		setLocationRelativeTo( null );
 
 		JPanel panelCampos = new JPanel( );
-		panelCampos.setLayout( new GridLayout( 2, 2, 10, 10 ) );
+		panelCampos.setLayout( new GridLayout( 2, 2) );
 		panelCampos.setBorder( new TitledBorder( "Campos" ) );
 
 		JLabel labNombreUsuario = new JLabel( "Login:" );
@@ -113,14 +113,8 @@ public class DialogoIngreso extends JDialog implements ActionListener
 			{
 				JOptionPane.showMessageDialog( this, "No existe el usuario. Hable con el administrador.", "Ingresar", JOptionPane.ERROR_MESSAGE );
 			}
-			else if(x.esBibliotecario())
-			{
-				 new FrameBibliotecario(x, principal);
-			}
-			else
-			{
-				new FrameCliente(x, principal);
-			}
+			else 
+				new FrameBibliotecario(x, principal);
 		}
 	}
 }

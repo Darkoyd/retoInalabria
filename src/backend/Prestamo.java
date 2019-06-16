@@ -17,9 +17,9 @@ public class Prestamo
 	private String tituloLibro;
 	
 	/*
-	 * Usuario que hace el prestamo.
+	 * Nomnre de quien hace el prestamo.
 	 */
-	private String userLogin;
+	private String userName;
 	
 	/*
 	 * Fecha de entrega.
@@ -33,13 +33,13 @@ public class Prestamo
 	/**
 	 * Método constructor de un prestamo.
 	 * @param pLibro Libro a prestar.
-	 * @param pUser Usuario que presta
+	 * @param name Usuario que presta
 	 * @param pPlazo Fecha de entrega del libro.
 	 */
-	public Prestamo(String pLibro, String pUser, String pPlazo) 
+	public Prestamo(String name, String pLibro, String pPlazo) 
 	{
 		tituloLibro = pLibro;
-		userLogin = pUser;
+		userName = name;
 		plazo = pPlazo;
 	}
 
@@ -56,7 +56,7 @@ public class Prestamo
 	 */
 	public String darUserLogin() 
 	{
-		return userLogin;
+		return userName;
 	}
 
 	/**
