@@ -227,6 +227,7 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 	}
 
 
+
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -267,10 +268,19 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		else if(e.getActionCommand().equals(ELIMINAR))
 		{
 			if( prestamoActual != null)
+			{
 				user.eliminarPrestamo(prestamoActual);
+				actualizarListaPrestamos();
+			}
 			else
 				JOptionPane.showMessageDialog(this, "No hay un prestamo seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+
+	private void actualizarListaPrestamos() 
+	{
+		prestamos.setListData((Prestamo[]) user.darPrestamos().toArray());
 	}
 
 }
