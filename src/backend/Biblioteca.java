@@ -39,6 +39,9 @@ public class Biblioteca
 		cargarConfiguracion(archivoPropiedades);
 		admin = new Administrador( config );
 		admin.conectarABD( );
+		admin.iniciarTablaLibros();
+		admin.iniciarTablaPrestamos();
+		admin.iniciarTablaUsuarios();
 	}
 	
 	/*

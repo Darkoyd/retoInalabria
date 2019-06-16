@@ -74,6 +74,7 @@ public class DialogoRegistro extends JDialog implements ActionListener
 		setTitle( "Registrar usuario" );
 		setSize( 300, 200 );
 		setLayout( new BorderLayout( ) );
+		setVisible(true);
 
 		setLocationRelativeTo( null );
 

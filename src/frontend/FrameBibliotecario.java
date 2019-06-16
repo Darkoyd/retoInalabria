@@ -25,12 +25,22 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 {
 
 	//-----------------------------------------------------------------
-	//Atributos y constantes
+		//Atributos y constantes
 	//-----------------------------------------------------------------
 	/**
 	 * Constante de serializacion.
 	 */
 	private static final long serialVersionUID = 1L;
+
+	private final static String ACTUALIZAR = "Actualizar";
+
+	private final static String PRESTAR = "Prestar Libro";
+
+	private final static String REGISTRAR = "Registrar Usuario";
+
+	private final static String AGREGAR = "Agregar Libro";
+
+	private final static String ELIMINAR = "Eliminar prestamo";
 
 	/**
 	 * Asocioacion con la ventana principal.
@@ -52,9 +62,9 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 
 	private JTextField txtEditorial;
 
-	private JList<Libro> libros;
+	private JList<Object> libros;
 
-	private JList<Prestamo> prestamos;
+	private JList<Object> prestamos;
 
 	private Collection<Libro> listaLibros;
 
@@ -73,20 +83,8 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 	private Prestamo prestamoActual;
 
 
-	private final static String ACTUALIZAR = "Actualizar";
-
-	private final static String PRESTAR = "Prestar Libro";
-
-	private final static String REGISTRAR = "Registrar Usuario";
-
-	private final static String AGREGAR = "Agregar Libro";
-
-	private final static String ELIMINAR = "Eliminar prestamo";
-
-
-
 	//-----------------------------------------------------------------
-	//Métodos
+		//Métodos
 	//-----------------------------------------------------------------
 
 	/**
@@ -101,8 +99,8 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		principal = pPrincipal;
 		setTitle("Biblioteca Virtual - Bienvenido");
 		setVisible(true);
+		setSize(1000, 1000);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(600, 600);
 		setLayout(new BorderLayout());
 
 		//libro
@@ -143,8 +141,13 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		//listas
 		JPanel listas = new JPanel();
 		listas.setLayout(new GridLayout(2, 1));
-		libros = new JList<>();
-		prestamos = new JList<>();
+		
+		libros = new JList<Object>();
+		prestamos = new JList<Object>();
+		
+		libros.setVisible(true);
+		prestamos.setVisible(true);
+		
 		prestamos.setBorder(new TitledBorder("Lista de prestamos"));
 		prestamos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -154,12 +157,12 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		prestamos.addListSelectionListener(this);
 		libros.addListSelectionListener(this);
 
-		prestamos.setListData((Prestamo[]) user.darPrestamos().toArray());
+		prestamos.setListData(user.darPrestamos().toArray());
 
 		listas.add(libros);
 		listas.add(prestamos);
 
-		add(listas, BorderLayout.EAST);
+		add(listas, BorderLayout.WEST);
 
 		//opciones
 		JPanel opciones = new JPanel();
@@ -198,14 +201,14 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 	public void actualizarLibros()
 	{
 		listaLibros = principal.darBack().darAdmin().consultarLibros();
-		libros.setListData((Libro[]) listaLibros.toArray());
+		libros.setListData(listaLibros.toArray());
 	}
 
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) 
 	{
-		Libro x = libros.getSelectedValue();
-		Prestamo y = prestamos.getSelectedValue();
+		Libro x = (Libro) libros.getSelectedValue();
+		Prestamo y = (Prestamo) prestamos.getSelectedValue();
 		if(x != null)
 		{
 			libroActual = x;
@@ -216,17 +219,6 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 			prestamoActual = y;
 		}
 	}
-
-	private void actualizarPanelLibro() 
-	{
-		txtTitulo.setText(libroActual.darTitulo());
-		txtAutor.setText(libroActual.darAutor());
-		txtGenero.setText(libroActual.darGenero());
-		txtSinopsis.setText(libroActual.darSinopsis());
-		txtEditorial.setText(libroActual.darEditorial());
-	}
-
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) 
@@ -275,6 +267,16 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 			else
 				JOptionPane.showMessageDialog(this, "No hay un prestamo seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+
+	private void actualizarPanelLibro() 
+	{
+		txtTitulo.setText(libroActual.darTitulo());
+		txtAutor.setText(libroActual.darAutor());
+		txtGenero.setText(libroActual.darGenero());
+		txtSinopsis.setText(libroActual.darSinopsis());
+		txtEditorial.setText(libroActual.darEditorial());
 	}
 
 

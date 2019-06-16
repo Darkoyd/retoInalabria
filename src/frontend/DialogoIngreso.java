@@ -72,14 +72,14 @@ public class DialogoIngreso extends JDialog implements ActionListener
 		principal = pPrincipal;
 
 		setTitle( "Ingresar" );
-		setSize( 300, 200 );
+		setSize( 300, 150 );
 		setVisible(true);
 		setLayout( new BorderLayout( ) );
 
 		setLocationRelativeTo( null );
 
 		JPanel panelCampos = new JPanel( );
-		panelCampos.setLayout( new GridLayout( 2, 2) );
+		panelCampos.setLayout( new GridLayout( 2, 2, 5, 5) );
 		panelCampos.setBorder( new TitledBorder( "Campos" ) );
 
 		JLabel labNombreUsuario = new JLabel( "Login:" );
@@ -114,7 +114,10 @@ public class DialogoIngreso extends JDialog implements ActionListener
 				JOptionPane.showMessageDialog( this, "No existe el usuario. Hable con el administrador.", "Ingresar", JOptionPane.ERROR_MESSAGE );
 			}
 			else 
+			{
 				new FrameBibliotecario(x, principal);
+				this.dispose();
+			}
 		}
 	}
 }

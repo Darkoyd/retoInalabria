@@ -123,44 +123,6 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	}
 	
 	/**
-     * Cierra la ventana y la aplicación.
-     */
-    public void dispose( )
-    {
-        super.dispose( );
-        try
-        {
-            backEnd.darAdmin( ).desconectarBD( );
-        }
-        catch( SQLException e )
-        {
-            e.printStackTrace( );
-        }
-        System.exit( 0 );
-    }
-
-	@Override
-	public void actionPerformed(ActionEvent e) 
-	{
-		if(e.getActionCommand() == INGRESO)
-		{
-			new DialogoIngreso(this);
-		}
-		if(e.getActionCommand() == SALIR)
-		{
-			int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que desea salir?");
-			if(respuesta == 0)
-			{
-				dispose();
-			}
-			else
-			{
-				
-			}
-		}
-	}
-
-	/**
 	 * Método que registra al usuario.
 	 * @param login Login del usuario.
 	 * @param nombre Nombre del usuario.
@@ -245,6 +207,44 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	public Prestamo consultarPrestamo(String nombre, String titulo)
 	{
 		return backEnd.darAdmin().consultarPrestamo(nombre, titulo);
+	}
+
+	/**
+	 * Cierra la ventana y la aplicación.
+	 */
+	public void dispose( )
+	{
+	    super.dispose( );
+	    try
+	    {
+	        backEnd.darAdmin( ).desconectarBD( );
+	    }
+	    catch( SQLException e )
+	    {
+	        e.printStackTrace( );
+	    }
+	    System.exit( 0 );
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		if(e.getActionCommand() == INGRESO)
+		{
+			new DialogoIngreso(this);
+		}
+		if(e.getActionCommand() == SALIR)
+		{
+			int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que desea salir?");
+			if(respuesta == 0)
+			{
+				dispose();
+			}
+			else
+			{
+				
+			}
+		}
 	}
 
 }

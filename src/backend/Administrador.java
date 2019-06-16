@@ -128,7 +128,7 @@ public class Administrador {
 		}
 		if( crearTabla )
 		{
-			s.execute( "CREATE TABLE prestamos (nombre varchar(32), titulo varchar(100), PRIMARY KEY (login, titulo))" );
+			s.execute( "CREATE TABLE prestamos (nombre varchar(32), titulo varchar(100), PRIMARY KEY (nombre, titulo))" );
 		}
 
 		s.close( );
@@ -154,7 +154,7 @@ public class Administrador {
 		}
 		if( crearTabla )
 		{
-			s.execute( "CREATE TABLE libros (titulo varchar(100), autor varchar(64), genero varchar(32), sinopsis varchar(10000), editorial varchar(32)), PRIMARY KEY (titulo))" );
+			s.execute( "CREATE TABLE libros (titulo varchar(100), autor varchar(64), genero varchar(32), sinopsis varchar(10000), editorial varchar(32), PRIMARY KEY (titulo))");
 		}
 
 		s.close( );

@@ -62,11 +62,12 @@ public class DialogoNuevoLibro extends JDialog implements ActionListener
 		setTitle( "Registrar libro" );
 		setSize( 300, 800 );
 		setLayout( new BorderLayout( ) );
+		setVisible(true);
 
 		setLocationRelativeTo( null );
 		
 		JPanel panelCampos = new JPanel( );
-		panelCampos.setLayout( new GridLayout( 5, 2, 10, 10 ) );
+		panelCampos.setLayout( new GridLayout( 5, 2, 20, 20 ) );
 		panelCampos.setBorder( new TitledBorder( "Campos" ) );
 		
 		JLabel titulo = new JLabel("Titulo: ");
