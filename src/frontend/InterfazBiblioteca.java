@@ -134,26 +134,50 @@ public class InterfazBiblioteca extends JFrame implements ActionListener
 	{
 		if(e.getActionCommand() == INGRESO)
 		{
-			
+			new DialogoIngreso(this);
+		}
+		if(e.getActionCommand() == SALIR)
+		{
+			int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que desea salir?");
+			if(respuesta == 0)
+			{
+				dispose();
+			}
+			else
+			{
+				
+			}
 		}
 	}
 
 	/**
 	 * Método que registra al usuario.
-	 * @param login
-	 * @param nombre
-	 * @param contrasena
-	 * @param esBiblio 
+	 * @param login Login del usuario.
+	 * @param nombre Nombre del usuario.
+	 * @param contrasena Contraseña de ingreso.
+	 * @param esBiblio Booleano si el usuario es un bibliotecario.
 	 */
 	public void registrarUsuario(String login, String nombre, String contrasena, boolean esBiblio) 
 	{
-		// TODO Auto-generated method stub
-		
+		try 
+		{
+			principal.darAdmin().registrarUsuario(login, nombre, contrasena, esBiblio);
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
+	/**
+	 * Método que consulta en la DB por el usuario.
+	 * @param login Login del usuario.
+	 * @param contrasena Contraseña de ingreso.
+	 * @return Usuario con el login dado.
+	 */
 	public Usuario consultarUsuario(String login, String contrasena) 
 	{
-		// TODO Auto-generated method stub
+		return principal.darAdmin().consultarUsuario(login, contrasena);
 		
 	}
 

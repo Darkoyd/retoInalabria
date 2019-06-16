@@ -73,6 +73,7 @@ public class DialogoIngreso extends JDialog implements ActionListener
 
 		setTitle( "Ingresar" );
 		setSize( 300, 200 );
+		setVisible(true);
 		setLayout( new BorderLayout( ) );
 
 		setLocationRelativeTo( null );
@@ -114,7 +115,7 @@ public class DialogoIngreso extends JDialog implements ActionListener
 			}
 			else if(x.esBibliotecario())
 			{
-				 new FrameBibliotecario(x);
+				 new FrameBibliotecario(x, principal);
 			}
 			else
 			{

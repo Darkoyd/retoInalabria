@@ -4,12 +4,21 @@ import javax.swing.JFrame;
 
 import backend.Usuario;
 
+/**
+ * Frame del bibliotecario.
+ * @author Nicolás Londoño
+ *
+ */
 public class FrameBibliotecario extends JFrame
 {
 
 	//-----------------------------------------------------------------
 		//Atributos y constantes
 	//-----------------------------------------------------------------
+	/**
+	 * Constante de serializacion.
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Asocioacion con la ventana principal.

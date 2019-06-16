@@ -1,6 +1,8 @@
 package backend;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -98,6 +100,26 @@ public class Usuario
 	public boolean esBibliotecario()
 	{
 		return bibliotecario;
+	}
+	
+	/**
+	 * Método que agrega un prestamo al usuario.
+	 * @param pLibro Libro a prestar
+	 * @param pPlazo Plazo de entrega del libro
+	 * @throws Exception si ya se tiene el libro en los prestamos.
+	 */
+	public void agregarPrestamo(Libro pLibro, Date pPlazo) throws Exception
+	{
+		Iterator<Prestamo> iter = prestamos.iterator();
+		while(iter.hasNext())
+		{
+			if(iter.next().darLibro().darTitulo().equals(pLibro.darTitulo()))
+			{
+				throw new Exception("Ya tiene este libro.");
+			}
+		}
+		Prestamo x = new Prestamo(pLibro, this, pPlazo);
+		prestamos.add(x);
 	}
 
 }

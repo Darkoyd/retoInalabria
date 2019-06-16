@@ -77,5 +77,132 @@ public class Administrador {
 		assert config != null : "Conjunto de propiedades inválidas";
 	
 	}
+	
+	/**
+	 * Método que inicia la tabla de usuarios.
+	 * @throws SQLException si hay un error de SQL.
+	 */
+	public void iniciarTablaUsuarios() throws SQLException
+	{
+		Statement s = conexion.createStatement( );
+
+		boolean crearTabla = false;
+		try
+		{
+			s.executeQuery( "SELECT * FROM usuarios WHERE 1=2" );
+		}
+		catch( SQLException se )
+		{
+			crearTabla = true;
+		}
+
+		if( crearTabla )
+		{
+			s.execute( "CREATE TABLE usuarios (nombre varchar(50), login varchar(32), contrasena varchar(32), esBiblio int, PRIMARY KEY (login))" );
+			String sql = "INSERT INTO usuarios (login, nombre, contrasena, esBiblio) VALUES ('admin', 'admin','admin' , 1)";
+			Statement st = conexion.createStatement();
+			st.execute(sql);
+		}
+
+		s.close( );
+		verificarInvariante();
+	}
+	
+	/**
+	 * Método que inicia la tabla de prestamos.
+	 * @throws SQLException si hay un error de SQL.
+	 */
+	public void iniciarTablaPrestamos() throws SQLException
+	{
+		Statement s = conexion.createStatement( );
+
+		boolean crearTabla = false;
+		try
+		{
+			s.executeQuery( "SELECT * FROM prestamos WHERE 1=2" );
+		}
+		catch( SQLException se )
+		{
+			crearTabla = true;
+		}
+		if( crearTabla )
+		{
+			s.execute( "CREATE TABLE prestamos (login varchar(32), titulo varchar(100), fecha varchar (20), PRIMARY KEY (login, titulo))" );
+		}
+
+		s.close( );
+		verificarInvariante();
+	}
+
+	/**
+	 * Método que consulta la BD por los usuarios.
+	 * @param login Login a buscar.
+	 * @param contrasena Contraseña del usuario.
+	 * @return Usuario encontrado. Si no encuentra retorna null.
+	 */
+	public Usuario consultarUsuario(String login, String contrasena) 
+	{
+		Usuario registro = null;
+
+		try 
+		{
+			String sql = "SELECT * FROM usuarios WHERE login ='" + login + "' AND contrasena ='" + contrasena +"'" ;
+
+			Statement st = conexion.createStatement( );
+			ResultSet resultado = st.executeQuery( sql );
+
+			if( resultado.next( ) )
+			{
+				String nombre =  resultado.getString(1);
+				boolean esBiblio = resultado.getBoolean(4);
+				registro = new Usuario( nombre, login, contrasena, esBiblio);
+				resultado.close( );
+			}
+			else
+			{
+				resultado.close( );
+				return null;
+			}
+
+			st.close( );
+		} 
+		catch (SQLException e) 
+		{
+
+			e.printStackTrace();
+		}
+		verificarInvariante();
+		return registro;
+		
+	}
+	
+	/**
+	 * Inserta un usuario a la BD.
+	 * @param login Login del usuario.
+	 * @param nombre Nombre del usuario.
+	 * @param contrasena Contraseña del usuario
+	 * @param esBiblio Boolean si es bibliotecario.
+	 * @return true si se pudo registrar usuario.
+	 * @throws SQLException si ocurre un error de SQL.
+	 */
+	public boolean registrarUsuario(String login, String nombre, String contrasena, boolean esBiblio) throws SQLException
+	{
+		if(consultarUsuario(login, contrasena) == null)
+		{
+			int x = 0;
+			if(esBiblio)
+			{
+				x = 1;
+			}
+		String sql = "INSERT INTO usuarios (login, nombre, contrasena, esBiblio) VALUES ('" + login + "', '" + nombre + "','" + contrasena + "' , " + x + ")";
+		Statement st = conexion.createStatement();
+		st.execute(sql);
+		return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 }
