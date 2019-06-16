@@ -26,18 +26,22 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 {
 
 	//-----------------------------------------------------------------
-	//Atributos y constantes
+		//Atributos y constantes
 	//-----------------------------------------------------------------
+	
 	/**
 	 * Constante de serializacion.
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Constantes de los botones
+	 */
+	private final static String PRESTAR = "Prestar libro";
 
-	private final static String PRESTAR = "Prestar Libro";
+	private final static String REGISTRAR = "Registrar usuario";
 
-	private final static String REGISTRAR = "Registrar Usuario";
-
-	private final static String AGREGAR = "Agregar Libro";
+	private final static String AGREGAR = "Agregar libro";
 
 	private final static String ELIMINAR = "Eliminar prestamo";
 
@@ -53,15 +57,21 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 	 */
 	private Usuario user;
 
+	/**
+	 * Campos de texto de la información del libro.
+	 */
 	private JTextField txtTitulo;
 
 	private JTextField txtAutor;
 
 	private JTextField txtGenero;
 
-
 	private JTextField txtEditorial;
-
+	
+	
+	/**
+	 * Listas y colecciones de libros y prestamos.
+	 */
 	private JList<Object> libros;
 
 	private JList<Object> prestamos;
@@ -69,7 +79,11 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 	private Collection<Libro> listaLibros;
 	
 	private Collection<Prestamo> listaPrestamos;
-
+	
+	
+	/**
+	 * Botones de opciones.
+	 */
 	private JButton prestar;
 
 	private JButton registrar;
@@ -77,16 +91,26 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 	private JButton agregar;
 
 	private JButton eliminar;
-
+	
+	
+	/**
+	 * Libro actual seleccionado.
+	 */
 	private Libro libroActual;
 
+	/**
+	 * Prestamo actual seleccionado.
+	 */
 	private Prestamo prestamoActual;
 
+	/**
+	 * Botón super secreto, borra toda la BD.
+	 */
 	private JButton goldyBorreTodo;
 
 
 	//-----------------------------------------------------------------
-	//Métodos
+		//Métodos
 	//-----------------------------------------------------------------
 
 	/**
@@ -123,7 +147,7 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		infoLibro.setLayout(new GridLayout(4, 2, 0, 50));
 		JLabel titulo = new JLabel("Titulo: ");
 		JLabel autor = new JLabel("Autor: ");
-		JLabel genero = new JLabel("Genero: ");
+		JLabel genero = new JLabel("Género: ");
 		JLabel editorial = new JLabel("Editorial: ");
 
 		txtTitulo = new JTextField();
@@ -131,12 +155,9 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		txtGenero = new JTextField();
 		txtEditorial = new JTextField();
 
-
-
 		txtTitulo.setEditable(false);
 		txtAutor.setEditable(false);
 		txtGenero.setEditable(false);
-
 		txtEditorial.setEditable(false);
 
 		infoLibro.add(titulo);
@@ -149,7 +170,6 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 		infoLibro.add(txtEditorial);
 		add(infoLibro, BorderLayout.CENTER);
 
-
 		//listas
 		JPanel listas = new JPanel();
 		listas.setPreferredSize(new Dimension(300, 600));
@@ -157,7 +177,7 @@ public class FrameBibliotecario extends JFrame implements ActionListener, ListSe
 
 		libros = new JList<Object>();
 		prestamos = new JList<Object>();
-
+		
 		libros.setVisible(true);
 		prestamos.setVisible(true);
 

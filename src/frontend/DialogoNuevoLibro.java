@@ -30,8 +30,14 @@ public class DialogoNuevoLibro extends JDialog implements ActionListener
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Asociación con la ventana principal
+	 */
 	private InterfazBiblioteca principal;
 
+	/**
+	 * Campos de texto del nuevo libro.
+	 */
 	private JTextField txtTitulo;
 
 	private JTextField txtAutor;
@@ -40,10 +46,19 @@ public class DialogoNuevoLibro extends JDialog implements ActionListener
 
 	private JTextField txtEditorial;
 
+	/**
+	 * Botón para agregar el libro.
+	 */
 	private JButton agregar;
 
+	/**
+	 * Constante del botón
+	 */
 	private final static String AGREGAR_LIBRO = "Agregar";
 	
+	/**
+	 * Asociación con el cuadro del bibliotecario.
+	 */
 	private FrameBibliotecario frameBibliotecario;
 
 	//-----------------------------------------------------------------
@@ -72,7 +87,7 @@ public class DialogoNuevoLibro extends JDialog implements ActionListener
 		
 		JLabel titulo = new JLabel("Titulo: ");
 		JLabel autor = new JLabel("Autor: ");
-		JLabel genero = new JLabel("Genero: ");
+		JLabel genero = new JLabel("Género: ");
 		JLabel editorial = new JLabel("Editorial: ");
 		
 		txtTitulo = new JTextField();
