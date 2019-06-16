@@ -1,6 +1,3 @@
-/**
- * Clase principal de la biblioteca.
- */
 package frontend;
 
 import java.awt.BorderLayout;
@@ -18,6 +15,7 @@ import backend.Prestamo;
 import backend.Usuario;
 
 /**
+ * Clase principal de toda la biblioteca.
  * @author Nicolás Londoño
  */
 public class InterfazBiblioteca extends JFrame implements ActionListener

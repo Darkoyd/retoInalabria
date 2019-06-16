@@ -17,8 +17,8 @@ import javax.swing.border.TitledBorder;
 import backend.Usuario;
 
 /**
+ * Dialogo de ingreso al sistema.
  * @author Nicolás Londoño
- *
  */
 public class DialogoIngreso extends JDialog implements ActionListener
 {

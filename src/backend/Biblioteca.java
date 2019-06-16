@@ -1,6 +1,3 @@
-/**
- * Clase principal de el Back End
- */
 package backend;
 
 import java.io.*;
@@ -8,6 +5,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
+ * Clase preincipal del backend.
  * @author Nicolás Londoño
  *
  */

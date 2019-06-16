@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 
 /**
  * Diálogo para registrar un nuevo usuario al blog.
+ * @author Nicolás Londoño
  */
 public class DialogoRegistro extends JDialog implements ActionListener
 {

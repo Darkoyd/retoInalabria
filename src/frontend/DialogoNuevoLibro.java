@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 /**
+ * Dialogo de registro de un libro.
  * @author Nicolás Londoño
- *
  */
 public class DialogoNuevoLibro extends JDialog implements ActionListener
 {

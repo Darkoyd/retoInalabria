@@ -1,11 +1,8 @@
-/*
- * Clase que representa los libros para prestar.
- */
 package backend;
 
 /**
- * @author userrrrr
- *
+ * Clase que representa un libro.
+ * @author Nicolás Londoño
  */
 public class Libro 
 {

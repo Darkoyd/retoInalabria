@@ -1,6 +1,3 @@
-/**
- * Clase que administra todas las conexiones con la BD.
- */
 package backend;
 
 import java.io.*;
@@ -9,8 +6,8 @@ import java.util.*;
 
 
 /**
+ * Clase que administra todas las conexiones con la BD.
  * @author Nicolás Londoño
- *
  */
 public class Administrador {
 
